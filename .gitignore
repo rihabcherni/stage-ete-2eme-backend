@@ -1,0 +1,39 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+pids/
+*.pid
+
+# Dependency directories
+jspm_packages/
+
+# Build directories
+build/
+dist/
+out/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*.swn
+*.sublime-workspace
+*.sublime-project
+.DS_Store
+
+# OS-specific files
+*.DS_Store
+*.Thumbs.db
+*.Desktop.ini
