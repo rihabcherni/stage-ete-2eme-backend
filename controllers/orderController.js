@@ -36,6 +36,16 @@ exports.deleteOrder = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+// Get all orders
+exports.getAllOrders = async (req, res) => {
+  try {
+      const orders = await Order.find();
+      res.status(200).json(orders);
+  } catch (err) {
+      res.status(400).json({ error: err.message });
+  }
+};
+
 
 // Get an order by ID
 exports.getOrderById = async (req, res) => {

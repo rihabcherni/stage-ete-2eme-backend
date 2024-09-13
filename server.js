@@ -18,6 +18,7 @@ const trainRoutes = require('./routes/trainRoutes');
 const wagonRoutes = require('./routes/wagonRoutes');
 const capteurRoutes = require('./routes/capteurIotRoutes');
 const messageRoutes = require('./routes/messageRoutes');
+const shipmentRoutes = require('./routes/shipmentRoutes');
 const { User } = require('./models/userModel');
 
 require('dotenv').config();
@@ -50,6 +51,7 @@ app.use('/api/trains', trainRoutes);
 app.use('/api/wagon', wagonRoutes);
 app.use('/api/capteur', capteurRoutes);
 app.use('/api/message', messageRoutes);
+app.use('/api/shipment', shipmentRoutes);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
