@@ -19,6 +19,9 @@ const wagonRoutes = require('./routes/wagonRoutes');
 const capteurRoutes = require('./routes/capteurIotRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const shipmentRoutes = require('./routes/shipmentRoutes');
+const reclamationRoutes = require('./routes/reclamationRoutes');
+const adminDashboardRoutes = require('./routes/AdminDashboardRoutes');
+
 const { User } = require('./models/userModel');
 
 require('dotenv').config();
@@ -50,8 +53,10 @@ app.use('/api/order', orderRoutes);
 app.use('/api/trains', trainRoutes);
 app.use('/api/wagon', wagonRoutes);
 app.use('/api/capteur', capteurRoutes);
-app.use('/api/message', messageRoutes);
+app.use('/api/messages', messageRoutes);
 app.use('/api/shipment', shipmentRoutes);
+app.use('/api/reclamations', reclamationRoutes);
+app.use('/api/dash-admin', adminDashboardRoutes);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -103,16 +108,15 @@ io.on('connection', (socket) => {
     socket.emit('receiveMessage', { history: messages.reverse() });
   }).catch(err => console.error(err));
 
-  // Handle private messages
   socket.on('privateMessage', async ({ senderId, receiverId, message }) => {
     const newMessage = new Message({ senderId, receiverId, message });
     await newMessage.save();
-
     if (connectedUsers[receiverId]) {
       io.to(connectedUsers[receiverId]).emit('receiveMessage', newMessage);
     }
+      io.to(connectedUsers[senderId]).emit('receiveMessage', newMessage);
   });
-
+  
   // Handle disconnection
   socket.on('disconnect', () => {
     for (let [userId, socketId] of Object.entries(connectedUsers)) {
